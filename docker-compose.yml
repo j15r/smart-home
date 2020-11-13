@@ -1,0 +1,64 @@
+version: '3.3'
+services:
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto:${MOSQUITTO_VERSION}
+    volumes:
+      - ${MOSQUITTO_DIR}/config:/mosquitto/config
+      - ${MOSQUITTO_DIR}/log:/mosquitto/log
+      - ${MOSQUITTO_DIR}/data:/mosquitto/data
+    restart: unless-stopped
+    network_mode: host
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+
+  zigbee2mqtt:
+    container_name: zigbee2mqtt
+    image: koenkk/zigbee2mqtt:${ZIGBEE2MQTT_VERSION}
+    volumes:
+      - ${ZIGBEE2MQTT_DIR}/data:/app/data
+    restart: unless-stopped
+    network_mode: host
+    devices:
+      - /dev/ttyUSB0
+    ports:
+      - "8888:8888"
+
+  postgres:
+    container_name: postgres
+    image: postgres:${POSTGRESQL_VERSION}
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    volumes:
+      - ${HASS_DIR}/postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: homeassistant
+      POSTGRES_PASSWORD: ${POSTGRESQL_PASSWORD}
+      POSTGRES_DB: homeassistant
+      TZ: "Europe/Berlin"
+
+  homeassistant:
+    container_name: homeassistant
+    image: homeassistant/raspberrypi4-homeassistant:${HASS_VERSION}
+    volumes:
+      - ${HASS_DIR}/config:/config
+      - /etc/localtime:/etc/localtime:ro
+    restart: unless-stopped
+    network_mode: host
+    depends_on:
+      - postgres
+      - mosquitto
+      - zigbee2mqtt
+
+  nodered:
+    container_name: nodered
+    image: nodered/node-red:${NODERED_VERSION}
+    volumes:
+      - ${NODERED_DIR}/data:/data
+    restart: unless-stopped
+    network_mode: host
+    ports:
+      - "1880:1880"
+    user: "1001:1001"
