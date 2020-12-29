@@ -1,11 +1,11 @@
 # Smart Home
 Docker setup for Home Assistant und Unifi based smart home stack.
 
-# Home Assistant Requirements
+# Home Assistant
 
 Contains home-assistant, nodered, zigbee2mqtt, mosquitto and postgresql.
 
-## Hardware / software
+## Hardware and software requirements
 
 - Raspberry Pi 4
   - Ubuntu Server 20 (64bit version)
