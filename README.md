@@ -22,4 +22,4 @@ Contains home-assistant, nodered, zigbee2mqtt, mosquitto and postgresql.
 5. Install docker
 6. Install docker-compose
 7. ``cd home-assistant && docker-compose up -d``
-7. Optional: ``apt install pi-bluetooth`` (to use Pi bluetooth module)
+8. Optional: ``apt install pi-bluetooth`` (to use Pi bluetooth module)
