@@ -9,9 +9,6 @@ services:
       - ${MOSQUITTO_DIR}/data:/mosquitto/data
     restart: unless-stopped
     network_mode: host
-    ports:
-      - "1883:1883"
-      - "9001:9001"
 
   zigbee2mqtt:
     container_name: zigbee2mqtt
@@ -22,8 +19,6 @@ services:
     network_mode: host
     devices:
       - /dev/ttyUSB0
-    ports:
-      - "8888:8888"
 
   postgres:
     container_name: postgres
@@ -59,6 +54,4 @@ services:
       - ${NODERED_DIR}/data:/data
     restart: unless-stopped
     network_mode: host
-    ports:
-      - "1880:1880"
     user: "1001:1001"
