@@ -11,6 +11,7 @@ Contains home-assistant, nodered, zigbee2mqtt, mosquitto and postgresql.
   - Ubuntu Server 20 (64bit version)
   - Docker 20.10.x
   - Docker Compose 1.27.x
+- Zigbee Sniffer
   
 ## Installation
 
